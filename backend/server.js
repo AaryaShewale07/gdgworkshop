@@ -9,7 +9,7 @@ const app = express();
 app.use(cors({
   origin: [
     "http://127.0.0.1:5500",
-    "https://your-frontend-site.netlify.app"
+    "https://gdgworkshop1.netlify.app/"
   ],
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type"],
