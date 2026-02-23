@@ -7,7 +7,10 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: "http://127.0.0.1:5500",
+  origin: [
+    "http://127.0.0.1:5500",
+    "https://your-frontend-site.netlify.app"
+  ],
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type"],
 }));
