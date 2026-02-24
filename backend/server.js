@@ -5,16 +5,29 @@ require("dotenv").config();
 
 const app = express();
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://gdgworkshop1.netlify.app");
+  res.header("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(204);
+  }
+
+  next();
+});
+
 // Middleware
 app.use(cors({
   origin: [
     "http://127.0.0.1:5500",
-    "https://gdgworkshop1.netlify.app/"
+    "https://gdgworkshop1.netlify.app"
   ],
-  methods: ["GET", "POST"],
+  methods: ["GET", "POST", "OPTIONS"],
   allowedHeaders: ["Content-Type"],
 }));
 app.use(express.json());
+
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)
@@ -56,6 +69,8 @@ app.post("/register", async (req, res) => {
 });
 
 // Server Start
-app.listen(process.env.PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${process.env.PORT}`);
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
 });
